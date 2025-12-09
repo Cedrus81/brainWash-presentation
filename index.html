@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainWash Presentation</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: #1a1a1a;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        #viewport {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        #slide-wrapper {
+            width: 1280px;
+            height: 720px;
+            position: relative;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+            background: white;
+            transition: transform 0.1s ease-out;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+            background: white;
+        }
+
+        .nav-btn {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 100px;
+            cursor: pointer;
+            font-size: 24px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            /* Hidden by default, shown on hover of viewport */
+        }
+
+        #viewport:hover .nav-btn {
+            opacity: 1;
+        }
+
+        .nav-btn:hover {
+            background: rgba(0, 0, 0, 0.8);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.1;
+            cursor: default;
+        }
+
+        #prev-btn {
+            left: 20px;
+        }
+
+        #next-btn {
+            right: 20px;
+        }
+
+        #slide-counter {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        #viewport:hover #slide-counter {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="viewport">
+        <div id="slide-wrapper">
+            <iframe id="slide-frame" src="slide1.html" title="Presentation Slide"></iframe>
+        </div>
+
+        <button id="prev-btn" class="nav-btn" aria-label="Previous Slide">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
+        <button id="next-btn" class="nav-btn" aria-label="Next Slide">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
+
+        <div id="slide-counter">1 / 10</div>
+    </div>
+
+    <script>
+        const totalSlides = 10;
+        let currentSlide = 1;
+
+        const frame = document.getElementById('slide-frame');
+        const wrapper = document.getElementById('slide-wrapper');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const counter = document.getElementById('slide-counter');
+
+        // Initialize
+        updateUI();
+        resize();
+        window.addEventListener('resize', resize);
+
+        // Navigation Logic
+        function goToSlide(slideNum) {
+            if (slideNum < 1 || slideNum > totalSlides) return;
+
+            currentSlide = slideNum;
+
+            // Fade out effect could be added here, but simple src switch is faster
+            frame.src = `slide${currentSlide}.html`;
+
+            updateUI();
+        }
+
+        function updateUI() {
+            // Update buttons
+            prevBtn.disabled = currentSlide === 1;
+            nextBtn.disabled = currentSlide === totalSlides;
+
+            // Update counter
+            counter.textContent = `${currentSlide} / ${totalSlides}`;
+        }
+
+        prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
+        nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            switch (e.key) {
+                case 'ArrowRight':
+                case ' ':
+                case 'Enter':
+                case 'PageDown':
+                    goToSlide(currentSlide + 1);
+                    break;
+                case 'ArrowLeft':
+                case 'Backspace':
+                case 'PageUp':
+                    goToSlide(currentSlide - 1);
+                    break;
+                case 'Home':
+                    goToSlide(1);
+                    break;
+                case 'End':
+                    goToSlide(totalSlides);
+                    break;
+            }
+        });
+
+        // Responsive Scaling
+        function resize() {
+            const containerWidth = window.innerWidth;
+            const containerHeight = window.innerHeight;
+            const targetWidth = 1280;
+            const targetHeight = 720;
+
+            // Calculate scale to fit
+            const scaleX = containerWidth / targetWidth;
+            const scaleY = containerHeight / targetHeight;
+
+            // Use the smaller scale to ensure it fits entirely
+            // Subtract a small margin (e.g. 40px total) to avoid touching edges
+            const margin = 40;
+            const scaleXWithMargin = (containerWidth - margin) / targetWidth;
+            const scaleYWithMargin = (containerHeight - margin) / targetHeight;
+
+            const scale = Math.min(scaleXWithMargin, scaleYWithMargin);
+
+            wrapper.style.transform = `scale(${scale})`;
+        }
+
+        // Focus the iframe so keyboard events inside it might bubble up? 
+        // Actually, if focus is in iframe, key events might be trapped there.
+        // We should try to keep focus on the top window.
+        frame.onload = () => {
+            window.focus();
+            try {
+                const doc = frame.contentWindow.document;
+
+                // Inject styles to allow scrolling without scrollbars
+                const style = doc.createElement('style');
+                style.textContent = `
+                    /* Target ALL elements to hide scrollbars everywhere */
+                    * {
+                        scrollbar-width: none !important; /* Firefox */
+                        -ms-overflow-style: none !important; /* IE 10+ */
+                    }
+                    
+                    /* Chrome/Safari/Webkit */
+                    *::-webkit-scrollbar { 
+                        display: none !important;
+                        width: 0 !important;
+                        height: 0 !important;
+                    }
+
+                    body { 
+                        overflow-y: auto !important; 
+                    }
+
+                    .slide-container { 
+                        height: auto !important; 
+                        min-height: 720px !important; 
+                        overflow: visible !important; 
+                    }
+                `;
+                doc.head.appendChild(style);
+
+                // Add click listener to iframe contents to refocus parent
+                doc.body.addEventListener('click', () => {
+                    window.focus();
+                });
+                // Also forward key events from iframe to parent
+                doc.addEventListener('keydown', (e) => {
+                    const event = new KeyboardEvent('keydown', e);
+                    document.dispatchEvent(event);
+                });
+            } catch (err) {
+                // Cross-origin restrictions might block this if run from file:// protocol without flags,
+                // but usually fine for local files in same folder.
+                console.log("Could not attach listeners to iframe content");
+            }
+        };
+
+    </script>
+</body>
+
+</html>
