@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BrainWash Presentation</title>
+    <link rel="preload" as="image" href="screen1.jpeg">
+    <link rel="preload" as="image" href="screen2.jpeg">
+    <link rel="preload" as="image" href="screen3.jpeg">
     <style>
         body,
         html {
@@ -107,10 +110,46 @@
         #viewport:hover #slide-counter {
             opacity: 1;
         }
+
+        /* Mobile Optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .nav-btn {
+                opacity: 1;
+                background: rgba(0, 0, 0, 0.15);
+                width: 60px;
+                height: 80px;
+            }
+
+            .nav-btn:active {
+                background: rgba(0, 0, 0, 0.4);
+            }
+
+            #slide-counter {
+                opacity: 1;
+                bottom: 10px;
+            }
+        }
+
+        /* Orientation Warning - Disabled for Responsive Layout */
+        #orientation-warning {
+            display: none !important;
+        }
     </style>
 </head>
 
 <body>
+
+    <div id="orientation-warning">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 20px; animation: rotate 2s infinite;">
+            <path d="M12 3a6 3.6 0 0 0-6 3.6V18a6 3.6 0 0 0 6 3.6 6 3.6 0 0 0 6-3.6V6.6A6 3.6 0 0 0 12 3z"></path>
+            <path d="M14 21h-4"></path>
+        </svg>
+        <h2 style="font-size: 24px; margin-bottom: 10px;">Please Rotate Your Device</h2>
+        <p style="color: #aaa;">This presentation is best viewed in landscape mode.</p>
+        <button onclick="document.getElementById('orientation-warning').style.display='none'"
+            style="margin-top: 20px; padding: 10px 20px; background: #333; color: white; border: 1px solid #555; border-radius: 5px; cursor: pointer;">Dismiss</button>
+    </div>
 
     <div id="viewport">
         <div id="slide-wrapper">
@@ -199,6 +238,23 @@
         function resize() {
             const containerWidth = window.innerWidth;
             const containerHeight = window.innerHeight;
+
+            // Mobile Mode (Portrait or small screen)
+            if (containerWidth <= 768) {
+                wrapper.style.transform = 'none';
+                wrapper.style.width = '100%';
+                wrapper.style.height = '100%';
+                wrapper.style.boxShadow = 'none';
+                wrapper.style.left = '0';
+                wrapper.style.top = '0';
+                return;
+            }
+
+            // Desktop Mode
+            wrapper.style.width = '1280px';
+            wrapper.style.height = '720px';
+            wrapper.style.boxShadow = '0 0 50px rgba(0, 0, 0, 0.5)';
+
             const targetWidth = 1280;
             const targetHeight = 720;
 
@@ -262,6 +318,33 @@
                     const event = new KeyboardEvent('keydown', e);
                     document.dispatchEvent(event);
                 });
+
+                // Add Touch Swipe Support
+                let touchStartX = 0;
+                let touchEndX = 0;
+
+                doc.addEventListener('touchstart', e => {
+                    touchStartX = e.changedTouches[0].screenX;
+                });
+
+                doc.addEventListener('touchend', e => {
+                    touchEndX = e.changedTouches[0].screenX;
+                    handleSwipe();
+                });
+
+                function handleSwipe() {
+                    // Minimum swipe distance
+                    if (Math.abs(touchEndX - touchStartX) < 50) return;
+
+                    if (touchEndX < touchStartX) {
+                        // Swipe Left -> Next Slide
+                        window.parent.document.getElementById('next-btn').click();
+                    }
+                    if (touchEndX > touchStartX) {
+                        // Swipe Right -> Prev Slide
+                        window.parent.document.getElementById('prev-btn').click();
+                    }
+                }
             } catch (err) {
                 // Cross-origin restrictions might block this if run from file:// protocol without flags,
                 // but usually fine for local files in same folder.

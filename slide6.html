@@ -160,6 +160,119 @@
             background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%239C92AC' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
         }
     </style>
+
+    <style>
+        @media (max-width: 768px) {
+            /* Container Reset */
+            .slide-container {
+                width: 100% !important;
+                height: auto !important;
+                min-height: 100vh;
+                overflow-y: auto !important;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            /* Body Reset */
+            body { 
+                overflow: auto !important; 
+                height: auto !important;
+            }
+
+            /* Layout: Force Columns */
+            .flex {
+                flex-wrap: wrap;
+            }
+            
+            /* Target main layout columns (usually direct children of content area) */
+            .w-1\/2, .w-5\/12, .w-7\/12, .w-1\/3, .w-1\/4, .w-2\/3 {
+                width: 100% !important;
+                margin-bottom: 2rem;
+            }
+
+            /* Padding Adjustments */
+            .px-16, .px-12 {
+                padding-left: 1.5rem !important;
+                padding-right: 1.5rem !important;
+            }
+            .pt-12, .pt-8 {
+                padding-top: 1.5rem !important;
+                padding-bottom: 1rem !important;
+            }
+            .pb-6, .pb-12 {
+                padding-bottom: 2rem !important;
+            }
+            
+            /* Typography Scaling */
+            h1, .text-8xl { font-size: 3rem !important; line-height: 1.1 !important; }
+            h2, .text-5xl { font-size: 2rem !important; line-height: 1.2 !important; }
+            .text-9xl { font-size: 4rem !important; }
+            .text-4xl { font-size: 1.5rem !important; }
+            .text-xl { font-size: 1rem !important; }
+            
+            /* Header Adjustments */
+            .justify-between {
+                flex-direction: row !important; /* Keep header row */
+                align-items: center !important;
+            }
+            
+            /* Hide decorative background elements that might clutter */
+            .absolute.opacity-5, .absolute.opacity-10, .bg-grid {
+                /* Keep them but maybe scale down or ensure z-index is low */
+                z-index: 0;
+            }
+            
+            /* Specific Fixes */
+            .glass-card, .quest-card, .game-card {
+                height: auto !important;
+                min-height: 200px;
+            }
+            
+            /* Slide 8 Carousel Fixes */
+            .carousel-container {
+                height: auto !important;
+                min-height: 500px;
+            }
+            .slide-image-container {
+                height: 200px !important;
+            }
+            .nav-button {
+                width: 36px !important;
+                height: 36px !important;
+                font-size: 1rem !important;
+                background: rgba(139, 92, 246, 0.1) !important;
+            }
+            
+            /* Slide 1 Fixes */
+            .mb-16 { margin-bottom: 2rem !important; }
+            
+            /* Slide 3 Card Stack */
+            .card-stack {
+                transform: scale(0.8);
+                margin: 0 auto;
+            }
+            
+            /* Slide 9 Grid Fixes */
+            .grid-cols-9 {
+                display: flex !important;
+                flex-direction: column;
+                height: auto !important;
+            }
+            .col-span-4, .col-span-1 {
+                width: 100% !important;
+                margin-bottom: 1rem;
+            }
+            .connector-container {
+                display: none !important; /* Hide connector on mobile */
+            }
+            
+            /* Slide 5 Grid */
+            .grid-cols-2 {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+
 </head>
 
 <body>
