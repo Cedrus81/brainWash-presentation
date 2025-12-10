@@ -132,10 +132,49 @@
             background-color: #ECFDF5;
             color: #10B981;
         }
+
+        /* Main Content: 2x2 Grid */
+        .relative.z-10.px-16.flex-1.pb-12 {
+            padding-bottom: 2rem !important;
+            /* Reduce bottom padding */
+        }
+
+        .grid.grid-cols-2.gap-8.h-full {
+            gap: 1.5rem !important;
+            /* Reduce gap between cards */
+        }
+
+        .game-card {
+            padding: 1.5rem !important;
+            /* Reduce internal card padding */
+        }
+
+        .game-card h3 {
+            font-size: 1.25rem !important;
+            /* Slightly smaller titles */
+            margin-bottom: 0.25rem !important;
+        }
+
+        .game-card p {
+            font-size: 0.9rem !important;
+            /* Slightly smaller text */
+            line-height: 1.4 !important;
+        }
+
+        .icon-circle {
+            width: 3rem !important;
+            height: 3rem !important;
+            font-size: 1.5rem !important;
+        }
+
+        .mt-4 {
+            margin-top: 0.5rem !important;
+        }
     </style>
 
     <style>
         @media (max-width: 768px) {
+
             /* Container Reset */
             .slide-container {
                 width: 100% !important;
@@ -145,10 +184,10 @@
                 display: flex;
                 flex-direction: column;
             }
-            
+
             /* Body Reset */
-            body { 
-                overflow: auto !important; 
+            body {
+                overflow: auto !important;
                 height: auto !important;
             }
 
@@ -156,89 +195,130 @@
             .flex {
                 flex-wrap: wrap;
             }
-            
+
             /* Target main layout columns (usually direct children of content area) */
-            .w-1\/2, .w-5\/12, .w-7\/12, .w-1\/3, .w-1\/4, .w-2\/3 {
+            .w-1\/2,
+            .w-5\/12,
+            .w-7\/12,
+            .w-1\/3,
+            .w-1\/4,
+            .w-2\/3 {
                 width: 100% !important;
                 margin-bottom: 2rem;
             }
 
             /* Padding Adjustments */
-            .px-16, .px-12 {
+            .px-16,
+            .px-12 {
                 padding-left: 1.5rem !important;
                 padding-right: 1.5rem !important;
             }
-            .pt-12, .pt-8 {
+
+            .pt-12,
+            .pt-8 {
                 padding-top: 1.5rem !important;
                 padding-bottom: 1rem !important;
             }
-            .pb-6, .pb-12 {
+
+            .pb-6,
+            .pb-12 {
                 padding-bottom: 2rem !important;
             }
-            
+
             /* Typography Scaling */
-            h1, .text-8xl { font-size: 3rem !important; line-height: 1.1 !important; }
-            h2, .text-5xl { font-size: 2rem !important; line-height: 1.2 !important; }
-            .text-9xl { font-size: 4rem !important; }
-            .text-4xl { font-size: 1.5rem !important; }
-            .text-xl { font-size: 1rem !important; }
-            
+            h1,
+            .text-8xl {
+                font-size: 3rem !important;
+                line-height: 1.1 !important;
+            }
+
+            h2,
+            .text-5xl {
+                font-size: 2rem !important;
+                line-height: 1.2 !important;
+            }
+
+            .text-9xl {
+                font-size: 4rem !important;
+            }
+
+            .text-4xl {
+                font-size: 1.5rem !important;
+            }
+
+            .text-xl {
+                font-size: 1rem !important;
+            }
+
             /* Header Adjustments */
             .justify-between {
-                flex-direction: row !important; /* Keep header row */
+                flex-direction: row !important;
+                /* Keep header row */
                 align-items: center !important;
             }
-            
+
             /* Hide decorative background elements that might clutter */
-            .absolute.opacity-5, .absolute.opacity-10, .bg-grid {
+            .absolute.opacity-5,
+            .absolute.opacity-10,
+            .bg-grid {
                 /* Keep them but maybe scale down or ensure z-index is low */
                 z-index: 0;
             }
-            
+
             /* Specific Fixes */
-            .glass-card, .quest-card, .game-card {
+            .glass-card,
+            .quest-card,
+            .game-card {
                 height: auto !important;
                 min-height: 200px;
             }
-            
+
             /* Slide 8 Carousel Fixes */
             .carousel-container {
                 height: auto !important;
                 min-height: 500px;
             }
+
             .slide-image-container {
                 height: 200px !important;
             }
+
             .nav-button {
                 width: 36px !important;
                 height: 36px !important;
                 font-size: 1rem !important;
                 background: rgba(139, 92, 246, 0.1) !important;
             }
-            
+
             /* Slide 1 Fixes */
-            .mb-16 { margin-bottom: 2rem !important; }
-            
+            .mb-16 {
+                margin-bottom: 2rem !important;
+            }
+
             /* Slide 3 Card Stack */
             .card-stack {
                 transform: scale(0.8);
                 margin: 0 auto;
             }
-            
+
             /* Slide 9 Grid Fixes */
             .grid-cols-9 {
                 display: flex !important;
                 flex-direction: column;
                 height: auto !important;
             }
-            .col-span-4, .col-span-1 {
+
+            .col-span-4,
+            .col-span-1 {
                 width: 100% !important;
                 margin-bottom: 1rem;
             }
+
             .connector-container {
-                display: none !important; /* Hide connector on mobile */
+                display: none !important;
+                /* Hide connector on mobile */
             }
-            
+
             /* Slide 5 Grid */
             .grid-cols-2 {
                 grid-template-columns: 1fr !important;
